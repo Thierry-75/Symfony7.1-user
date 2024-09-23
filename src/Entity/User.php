@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -44,6 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 5)]
     private ?string $zip = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $isVerified = false;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createAt = null;
@@ -187,6 +191,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->createAt = $createAt;
 
+        return $this;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
         return $this;
     }
 }
