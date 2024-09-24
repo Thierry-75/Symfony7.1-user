@@ -1,5 +1,4 @@
-{% if app.flashes is not null %} {% for type, messages in app.flashes %} {% if
-type == 'alert-info' %}
+{% for type, messages in app.flashes %} {% if type == 'alert-info' %}
 <div class="alert-bg-info" role="alert">
   <svg
     class="flex-shrink-0 inline w-4 h-4 me-3"
@@ -209,4 +208,4 @@ type == 'alert-info' %}
     </svg>
   </button>
 </div>
-{% endif %} {% endfor %}{% endif %}
+{% endif %} {% endfor %}
