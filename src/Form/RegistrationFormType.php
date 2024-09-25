@@ -29,7 +29,7 @@ class RegistrationFormType extends AbstractType
                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
                    dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'],
                 'label' => 'Email',
-                'label_attr' => ['class' => 'form-label'],
+                'label_attr' => ['class' => 'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
                 'constraints' => [
                     new Sequentially([
                         new NotBlank(message: "Please enter your email"),
