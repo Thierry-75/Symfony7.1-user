@@ -47,11 +47,21 @@ window.onload = () => {
       //console.log(e);
       cleanCity(this, e);
     });
+    /*---------------------checkbox---------------------------------*/
+    let agree = form.querySelector("#registration_form_agreeTerms");
+    agree.addEventListener("click", function () {
+      cleanAgree(this);
+    });
     /*---------------------RGPD-------------------------------------*/
     let rgpd = form.querySelector("#registration_form_agreeTerms");
+    let small = document.querySelector("#agreeSmall");
     let form_submit = form.querySelector("#registration_form_submit");
     form_submit.addEventListener("click", function (event) {
+      alert(pseudo.classList);
       if (!rgpd.checked) {
+        small.innerHTML = "Accepter les conditions générales !";
+        small.classList.add("text-red-900");
+        rgpd.classList.add("border-red-300");
         event.preventDefault();
         event.stopImmediatePropagation();
         return false;
@@ -76,7 +86,7 @@ const validEmail = function (inputEmail) {
     small.classList.remove("text-green-800");
     small.classList.add("text-red-800");
     inputEmail.classList.remove("border-gray-300");
-    inputEmail.classList.remove("border-green-300");
+    inputEmail.classList.toggle("border-green-300");
     inputEmail.classList.add("border-red-300");
   }
 };
@@ -104,7 +114,7 @@ const validPseudo = function (inputPseudo) {
     small.classList.remove("text-green-800");
     small.classList.add("text-red-800");
     inputPseudo.classList.remove("border-gray-300");
-    inputPseudo.classList.remove("border-green-300");
+    inputPseudo.classList.toggle("border-green-300");
     inputPseudo.classList.add("border-red-300");
   }
 };
@@ -130,11 +140,11 @@ const validPassword = function (inputPassword) {
     inputPassword.classList.remove("border-red-300");
     inputPassword.classList.add("border-green-300");
   } else {
-    small.innerHTML = "Mot de passe non valide";
+    small.innerHTML = "Mot de passe invalide";
     small.classList.remove("text-green-800");
     small.classList.add("text-red-800");
     inputPassword.classList.remove("border-gray-300");
-    inputPassword.classList.remove("border-green-300");
+    inputPassword.classList.toggle("border-green-300");
     inputPassword.classList.add("border-red-300");
   }
 };
@@ -150,7 +160,6 @@ const cleanPassword = function (clickPassword) {
 
 const validZip = function (inputZip) {
   let zipRegExp = new RegExp(/^(F-)?((2[A|B])|[0-9]{2})[0-9]{3}$/);
-
   let small = document.querySelector("#zipSmall");
   if (inputZip.value.match(zipRegExp)) {
     small.innerHTML = "";
@@ -160,11 +169,10 @@ const validZip = function (inputZip) {
     inputZip.classList.remove("border-red-300");
     inputZip.classList.add("border-green-300");
   } else {
-    small.innerHTML = "Code postal non valide";
-    small.classList.remove("text-green-800");
-    small.classList.add("text-red-800");
+    small.innerHTML = "code postal invalide";
+    small.classList.toggle("text-red-900");
     inputZip.classList.remove("border-gray-300");
-    inputZip.classList.remove("border-green-300");
+    inputZip.classList.toggle("border-green-300");
     inputZip.classList.add("border-red-300");
   }
 };
@@ -193,7 +201,7 @@ const validCity = function (inputCity) {
     small.classList.remove("text-green-800");
     small.classList.add("text-red-800");
     inputCity.classList.remove("border-gray-300");
-    inputCity.classList.remove("border-green-300");
+    inputCity.classList.toggle("border-green-300");
     inputCity.classList.add("border-red-300");
   }
 };
@@ -205,4 +213,12 @@ const cleanCity = function (clickCity) {
     clickCity.classList.remove("border-red-300");
     clickCity.classList.add("border-gray-300");
   }
+};
+
+const cleanAgree = function (clickAgree) {
+  let small = document.querySelector("#agreeSmall");
+  small.innerHTML = "Accepter les conditions générales !";
+  small.classList.toggle("text-red-900");
+  small.classList.toggle("text-gray-600");
+  clickAgree.classList.toggle("border-blue-900");
 };

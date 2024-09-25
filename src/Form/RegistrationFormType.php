@@ -124,8 +124,8 @@ class RegistrationFormType extends AbstractType
             dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800',
 
                 ],
-                'label' => ' J\'accepte les conditions générales',
-                'label_attr' => ['class' => 'font-light text-gray-500 dark:text-gray-300 text-xs'],
+                'label' => 'Accepter les conditions générales',
+                'label_attr' => ['class' => 'font-light text-gray-500 dark:text-gray-300 text-xs', 'id' => 'agreeSmall'],
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
