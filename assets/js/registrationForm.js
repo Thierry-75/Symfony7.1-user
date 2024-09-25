@@ -7,7 +7,6 @@ window.onload = () => {
       validEmail(this);
     });
     email.addEventListener("focus", function (e) {
-      //console.log(e);
       cleanEmail(this, e);
     });
 
@@ -17,7 +16,6 @@ window.onload = () => {
       validPseudo(this);
     });
     pseudo.addEventListener("focus", function (e) {
-      //console.log(e);
       cleanPseudo(this, e);
     });
     /*--------------------password-----------------------------------*/
@@ -26,7 +24,6 @@ window.onload = () => {
       validPassword(this);
     });
     password.addEventListener("focus", function (e) {
-      //console.log(e);
       cleanPassword(this, e);
     });
     /*---------------------code postal----------------------------------*/
@@ -35,7 +32,6 @@ window.onload = () => {
       validZip(this);
     });
     zip.addEventListener("focus", function (e) {
-      //console.log(e);
       cleanZip(this, e);
     });
     /*---------------------ville------------------------------------*/
@@ -44,7 +40,6 @@ window.onload = () => {
       validCity(this);
     });
     city.addEventListener("focus", function (e) {
-      //console.log(e);
       cleanCity(this, e);
     });
     /*---------------------checkbox---------------------------------*/
@@ -57,9 +52,24 @@ window.onload = () => {
     let small = document.querySelector("#agreeSmall");
     let form_submit = form.querySelector("#registration_form_submit");
     form_submit.addEventListener("click", function (event) {
-      alert(pseudo.classList);
-      if (!rgpd.checked) {
-        small.innerHTML = "Accepter les conditions générales !";
+      let form = document.querySelector("#registration_form");
+      let inputs = form.getElementsByTagName("input");
+      let cpt = 0;
+      let selectInputs = [];
+      for (var i = 0; i < inputs.length; i++) {
+        let nom = inputs[i].type;
+        if (nom === "email" || nom === "password" || nom === "text") {
+          if (inputs[i].value == "") {
+            cpt++;
+            inputs[i].classList.remove("border-gray-300");
+            inputs[i].classList.add("border-red-300");
+          } else {
+            selectInputs[i] = inputs;
+          }
+        }
+      }
+      if (!rgpd.checked || cpt !== 0) {
+        small.innerHTML = "Accepter les conditions générales";
         small.classList.add("text-red-900");
         rgpd.classList.add("border-red-300");
         event.preventDefault();
@@ -72,7 +82,7 @@ window.onload = () => {
 
 const validEmail = function (inputEmail) {
   let emailRegExp = new RegExp(
-    "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
+    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
   );
   let small = document.querySelector("#emailSmall");
   if (inputEmail.value.match(emailRegExp)) {
@@ -217,8 +227,8 @@ const cleanCity = function (clickCity) {
 
 const cleanAgree = function (clickAgree) {
   let small = document.querySelector("#agreeSmall");
-  small.innerHTML = "Accepter les conditions générales !";
-  small.classList.toggle("text-red-900");
-  small.classList.toggle("text-gray-600");
+  small.innerHTML = "Accepter les conditions générales";
+  small.classList.remove("text-red-900");
+  small.classList.add("text-gray-600");
   clickAgree.classList.toggle("border-blue-900");
 };
