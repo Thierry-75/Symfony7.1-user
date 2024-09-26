@@ -27,7 +27,7 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'attr' => ['class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-xs 
                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
-                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'],
+                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => 'ex: exemple@mail.org'],
                 'label' => 'Email',
                 'label_attr' => ['class' => 'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
                 'constraints' => [
@@ -41,13 +41,13 @@ class RegistrationFormType extends AbstractType
             ->add('pseudo', TextType::class, [
                 'attr' => ['class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-xs 
                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
-                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'],
+                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => 'ex: Pseudonyme#1984'],
                 'label' => 'Pseudo',
                 'label_attr' => ['class' => 'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
                 'constraints' => [
                     new Sequentially([
                         new NotBlank(message: 'Please enter your lastname'),
-                        new Length(['min' => 2, 'max' => 25, 'minMessage' => 'min 2 characters', 'maxMessage' => 'max 30 characters']),
+                        new Length(['min' => 6, 'max' => 25, 'minMessage' => 'min 2 characters', 'maxMessage' => 'max 30 characters']),
                         new Regex(
                             pattern: '/^[a-zA-Zéèêà]{3,20}#[0-9]{2,4}$/i',
                             htmlPattern: '^[a-zA-Zéèêà]{3,20}#[0-9]{2,4}$'
@@ -63,6 +63,7 @@ class RegistrationFormType extends AbstractType
                     'class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-xs 
                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
                    dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
+                    'placeholder' => 'ex: E#xemplE78!',
                     'autocomplete' => 'new-password'
                 ],
                 'label' => 'Mot de passe',
@@ -72,7 +73,7 @@ class RegistrationFormType extends AbstractType
                         new NotBlank(['message' => 'Please enter your password']),
                         new Length([
                             'min' => 10,
-                            'max' => 15,
+                            'max' => 12,
                             'minMessage' => 'Your password should be at least {{ limit }} characters',
                             'maxMessage' => 'Your password should be max {{ limit }} characters'
                         ]),
@@ -86,7 +87,7 @@ class RegistrationFormType extends AbstractType
             ->add('zip', TextType::class, [
                 'attr' => ['class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-xs 
                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
-                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'],
+                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => 'ex: 83400'],
                 'label' => 'Code postal',
                 'label_attr' => ['class' => 'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
                 'constraints' => [
@@ -103,7 +104,7 @@ class RegistrationFormType extends AbstractType
             ->add('city', TextType::class, [
                 'attr' => ['class' => 'bg-gray-50 border border-gray-300 text-gray-900 text-xs 
                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
-                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'],
+                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => 'ex: Hyères les Palmiers'],
                 'label' => 'Ville',
                 'label_attr' => ['class' => 'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400 '],
                 'constraints' => [

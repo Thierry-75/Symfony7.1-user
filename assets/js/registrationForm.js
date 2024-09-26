@@ -92,7 +92,7 @@ const validEmail = function (inputEmail) {
     inputEmail.classList.remove("border-red-300");
     inputEmail.classList.add("border-green-300");
   } else {
-    small.innerHTML = "Email non valide";
+    small.innerHTML = "Erreur exemple: jamesBond007@albion.com";
     small.classList.remove("text-green-800");
     small.classList.add("text-red-800");
     inputEmail.classList.remove("border-gray-300");
@@ -120,7 +120,8 @@ const validPseudo = function (inputPseudo) {
     inputPseudo.classList.remove("border-red-300");
     inputPseudo.classList.add("border-green-300");
   } else {
-    small.innerHTML = "Pseudo non valide";
+    small.innerHTML =
+      "Erreur min: 3lettres#2chiffres max: 20lettres#4chiffres ";
     small.classList.remove("text-green-800");
     small.classList.add("text-red-800");
     inputPseudo.classList.remove("border-gray-300");
@@ -150,7 +151,7 @@ const validPassword = function (inputPassword) {
     inputPassword.classList.remove("border-red-300");
     inputPassword.classList.add("border-green-300");
   } else {
-    small.innerHTML = "Mot de passe invalide";
+    small.innerHTML = "Erreur max: 12 caractères choix : (a-zA-Z#?!@$ %^&*-)";
     small.classList.remove("text-green-800");
     small.classList.add("text-red-800");
     inputPassword.classList.remove("border-gray-300");
@@ -179,7 +180,7 @@ const validZip = function (inputZip) {
     inputZip.classList.remove("border-red-300");
     inputZip.classList.add("border-green-300");
   } else {
-    small.innerHTML = "code postal invalide";
+    small.innerHTML = "Erreur 5 chiffres !";
     small.classList.toggle("text-red-900");
     inputZip.classList.remove("border-gray-300");
     inputZip.classList.toggle("border-green-300");
@@ -207,7 +208,7 @@ const validCity = function (inputCity) {
     inputCity.classList.remove("border-red-300");
     inputCity.classList.add("border-green-300");
   } else {
-    small.innerHTML = "Ville non valide";
+    small.innerHTML = "Erreur max: 30 lettres sans tiret";
     small.classList.remove("text-green-800");
     small.classList.add("text-red-800");
     inputCity.classList.remove("border-gray-300");
