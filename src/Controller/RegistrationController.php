@@ -58,15 +58,16 @@ class RegistrationController extends AbstractController
             $mail->envoi(
                 'no-reply@monblog.org',
                 $user->getEmail(),
-                'Activation de votrecompte sur notre site',
+                'Activation de votre compte sur notre site',
                 'register',
                 [
                     'user' => $user,
                     'token' => $token
                 ]
             );
-
-            return $security->login($user, AppUserAuthenticator::class, 'main');
+            $this->addFlash('alert-success', 'confirmez votre adresse email');
+            //return $security->login($user, AppUserAuthenticator::class, 'main');
+            return $this->redirectToRoute('app_main');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -86,7 +87,7 @@ class RegistrationController extends AbstractController
                 $em->persist($user);
                 $em->flush();
                 $this->addFlash('alert-success', 'Votre compte a été activé !');
-                return $this->redirectToRoute('app_main');  // changer la route  ? profile
+                return $this->redirectToRoute('app_login');  // changer la route  ? profile
             }
         }
         $this->addFlash('alert-danger', 'Le token est invalide !');

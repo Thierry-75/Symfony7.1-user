@@ -31,12 +31,13 @@ class UserFixtures extends Fixture
             ->setZip(94500)
             ->setCity('Champigny sur Marne')
             ->setPseudo('Heraclite-75')
+            ->setIsVerified(false)
         ;
 
         $users[] = $admin;
         $manager->persist($admin);
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 3; $i++) {
             $user  = new User();
             $user->setEmail($this->faker->email())
                 ->setRoles(['ROLE_USER'])
@@ -45,7 +46,7 @@ class UserFixtures extends Fixture
                 ->setZip(str_replace(' ', '', $this->faker->postcode()))
                 ->setCity($this->faker->city())
                 ->setPseudo(mt_rand(0, 1) === 1 ? $this->faker->firstNameFemale() . '-' . mt_rand(1, 99) : $this->faker->firstNameMale() . '-' . mt_rand(0, 99))
-            ; //->setVerified(mt_rand(0, 1) === 1 ? true : false);
+                ->setIsVerified(mt_rand(0, 1) === 1 ? true : false);
             $users[] = $user;
             $manager->persist($user);
         }
