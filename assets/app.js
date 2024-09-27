@@ -5,8 +5,7 @@
  * which should already be in your base.html.twig.
  */
 import "./js/alert.js";
-import "./js/registrationForm.js";
-import "./js/loginForm.js";
+import "./js/controlForm.js";
 import "./styles/app.css";
 
 //console.log("This log comes from assets/app.js - welcome to AssetMapper! 🎉");

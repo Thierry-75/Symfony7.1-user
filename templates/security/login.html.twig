@@ -58,7 +58,7 @@ block body %}
     >
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
         <h1
-          class="text-xl text-center font-bold leading-tight tracking-tight text-blue-500 md:text-2xl dark:text-white"
+          class="text-xl text-center font-bold leading-tight tracking-tight text-cyan-400 md:text-2xl dark:text-white"
         >
           Se connecter
         </h1>
@@ -107,7 +107,12 @@ block body %}
           </button>
         </div>
         {% endif %}
-        <form method="post" class="space-y-4 md:space-y-6" id="connexion_form">
+        <form
+          method="post"
+          class="space-y-4 md:space-y-6"
+          id="connexion_form"
+          novalidate
+        >
           <div>
             <label
               for="inputEmail"
@@ -119,11 +124,14 @@ block body %}
               value="{{ last_username }}"
               name="email"
               id="inputEmail"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="rounded-lg bg-gray-50 border border-gray-300 text-gray-900 text-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               autocomplete="email"
               required
               autofocus
             />
+            <div class="text-xs text-red-700">
+              <small id="smallLogin">&nbsp;</small>
+            </div>
           </div>
           <div>
             <label
@@ -135,10 +143,13 @@ block body %}
               type="password"
               name="password"
               id="inputPassword"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="rounded-lg bg-gray-50 border border-gray-300 text-gray-900 text-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               autocomplete="current-password"
               required
             />
+            <div class="text-xs text-red-700">
+              <small id="smallPass">&nbsp;</small>
+            </div>
           </div>
           <div>
             <input
@@ -149,17 +160,26 @@ block body %}
             />
           </div>
           <div>
-            <label class="font-light text-gray-500 dark:text-gray-300 text-xs">
-              <input
-                type="checkbox"
-                name="_remember_me"
-                class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-              />
+            <input
+              type="checkbox"
+              name="_remember_me"
+              id="remember_me"
+              class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+            />
+            <label
+              class="font-light text-gray-500 dark:text-gray-300 text-xs"
+              id="smallSubmit"
+            >
               Se souvenir de moi
             </label>
           </div>
 
-          <button class="w-full btn-primary" type="submit">Connexion</button>
+          <input
+            value="Connexion"
+            id="formSubmitLogin"
+            class="w-full btn-info"
+            type="submit"
+          />
         </form>
       </div>
     </div>
