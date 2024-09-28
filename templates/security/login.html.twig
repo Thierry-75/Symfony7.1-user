@@ -77,9 +77,9 @@ block body %}
           </svg>
           <span class="sr-only">Info</span>
           <div>
-            <span class="font-medium">Danger !</span>
+            <span class="font-medium">Vérifiez votre saisie !</span>
             &nbsp;&nbsp;<strong
-              >{{ error.messageKey|trans(error.messageData, 'security') }}</strong
+              >{{ error.messageKey|trans(error.messageData, 'security') }}</strong  {#invalid credentials#}
             >
           </div>
           <button
@@ -127,7 +127,6 @@ block body %}
               class="rounded-lg bg-gray-50 border border-gray-300 text-gray-900 text-xs focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               autocomplete="email"
               required
-              autofocus
             />
             <div class="text-xs text-red-700">
               <small id="smallLogin">&nbsp;</small>
@@ -181,6 +180,14 @@ block body %}
             type="submit"
           />
         </form>
+        <p class="text-xs font-light text-gray-500 dark:text-gray-400">
+          Mot de passe oublié ? &nbsp;&nbsp;
+          <a
+            href="{{ path('forgotten_password') }}"
+            class="font-medium text-cyan-400 hover:underline dark:text-primary-500"
+            >&nbsp;Réinitialisation</a
+          >
+        </p>
       </div>
     </div>
   </div>
