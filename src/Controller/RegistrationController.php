@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use App\Service\JWTService;
 use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,11 +39,12 @@ class RegistrationController extends AbstractController
                     )
                 )->setRoles(['ROLE_USER']);
 
-                //try 
-                $entityManager->persist($user);
-                $entityManager->flush();
-                //end try catch
-
+                try {
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                } catch (EntityNotFoundException $e) {
+                    return $this->redirectToRoute('app_error', ['exception' => $e]);
+                }
                 //generate jwt
                 $header = [
                     'typ' => 'JWT',
@@ -85,8 +87,12 @@ class RegistrationController extends AbstractController
             $user  = $userRepository->find($payload['user_id']);
             if ($user && !$user->getIsVerified()) {
                 $user->setIsVerified(true);
-                $em->persist($user);
-                $em->flush();
+                try {
+                    $em->persist($user);
+                    $em->flush();
+                } catch (EntityNotFoundException $e) {
+                    return $this->redirectToRoute('app_error', ['exception' => $e]);
+                }
                 $this->addFlash('alert-success', 'Votre compte a été activé !');
                 return $this->redirectToRoute('app_login');  // changer la route  ? profile
             }
