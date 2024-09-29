@@ -5,14 +5,13 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
-use App\Security\AppUserAuthenticator;
 use App\Service\JWTService;
 use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -22,7 +21,6 @@ class RegistrationController extends AbstractController
     public function register(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
-        Security $security,
         EntityManagerInterface $entityManager,
         SendMailService $mail,
         JWTService $jwt
@@ -30,44 +28,47 @@ class RegistrationController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+        if ($request->isMethod('POST')) {
+            if ($form->isSubmitted() && $form->isValid()) {
+                // encode the plain password
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                )->setRoles(['ROLE_USER']);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            )->setRoles(['ROLE_USER']);
+                //try 
+                $entityManager->persist($user);
+                $entityManager->flush();
+                //end try catch
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+                //generate jwt
+                $header = [
+                    'typ' => 'JWT',
+                    'alg' => 'HS256'
+                ];
+                $payload = [
+                    'user_id' => $user->getId()
+                ];
+                //token
+                $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
-            //generate jwt
-            $header = [
-                'typ' => 'JWT',
-                'alg' => 'HS256'
-            ];
-            $payload = [
-                'user_id' => $user->getId()
-            ];
-            //token
-            $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
-
-            //envoi du mail
-            $mail->envoi(
-                'no-reply@monblog.org',
-                $user->getEmail(),
-                'Activation de votre compte sur notre site',
-                'register',
-                [
-                    'user' => $user,
-                    'token' => $token
-                ]
-            );
-            $this->addFlash('alert-success', 'confirmez votre adresse email');
-            //return $security->login($user, AppUserAuthenticator::class, 'main');
-            return $this->redirectToRoute('app_main');
+                //envoi du mail
+                $mail->envoi(
+                    'no-reply@monblog.org',
+                    $user->getEmail(),
+                    'Activation de votre compte sur notre site',
+                    'register',
+                    [
+                        'user' => $user,
+                        'token' => $token
+                    ]
+                );
+                $this->addFlash('alert-success', 'confirmez votre adresse email');
+                //return $security->login($user, AppUserAuthenticator::class, 'main');  // connect user sans activation compte par email
+                return $this->redirectToRoute('app_main');
+            }
         }
 
         return $this->render('registration/register.html.twig', [
