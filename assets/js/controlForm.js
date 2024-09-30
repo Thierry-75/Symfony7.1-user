@@ -115,7 +115,6 @@ window.onload = () => {
     let loginSubmit = document.querySelector("#formSubmitLogin"); // btn-submit
     loginSubmit.addEventListener("click", function (event) {
       let inputs = formLogin.getElementsByTagName("input");
-      let smallSubmit = formLogin.querySelector("smallSubmit");
       let cpt = 0;
       let emptyInputs = [];
       for (var i = 0; i < inputs.length; i++) {
@@ -154,7 +153,7 @@ const controlEmail = function (loginEmail) {
     loginEmail.classList.remove("border-red-300");
     loginEmail.classList.add("border-green-300");
   } else {
-    emailSmall.innerHTML = "Email non valide !";
+    emailSmall.innerHTML = "Email incorrect !";
     emailSmall.classList.remove("text-green-800");
     emailSmall.classList.add("text-red-800", "text-xs");
     loginEmail.classList.remove("border-gray-300");
@@ -184,7 +183,8 @@ const controlPassword = function (passwordLogin) {
     passwordLogin.classList.remove("border-red-300");
     passwordLogin.classList.add("border-green-300");
   } else {
-    passwordSmall.innerHTML = "Mot de passe non valide !";
+    passwordSmall.innerHTML =
+      "Mot de passe incorrect !  ex: AZaz09&#@=! (10 à 12 caractères)";
     passwordSmall.classList.remove("text-green-800");
     passwordSmall.classList.add("text-red-800", "text-xs");
     passwordLogin.classList.remove("border-gray-300");
@@ -223,7 +223,7 @@ const validEmail = function (inputEmail) {
     inputEmail.classList.remove("border-red-300");
     inputEmail.classList.add("border-green-300");
   } else {
-    small.innerHTML = "Adresse courriel non valide.";
+    small.innerHTML = "Email incorrect.";
     small.classList.remove("text-green-800");
     small.classList.add("text-red-800", "text-xs");
     inputEmail.classList.remove("border-gray-300");
@@ -251,7 +251,7 @@ const validPseudo = function (inputPseudo) {
     inputPseudo.classList.remove("border-red-300");
     inputPseudo.classList.add("border-green-300");
   } else {
-    small.innerHTML = "Pseudo non valide";
+    small.innerHTML = "Saisie incorrecte ! max 20 lettres + # + 4 chiffres";
     small.classList.remove("text-green-800");
     small.classList.add("text-red-800", "text-xs");
     inputPseudo.classList.remove("border-gray-300");
@@ -281,7 +281,7 @@ const validPassword = function (inputPassword) {
     inputPassword.classList.remove("border-red-300");
     inputPassword.classList.add("border-green-300");
   } else {
-    small.innerHTML = "Mot de passe non valide";
+    small.innerHTML = "Saisie incorrecte ! AZaz09&#@=! (10 à 12 caractères)";
     small.classList.remove("text-green-800");
     small.classList.add("text-red-800", "text-xs");
     inputPassword.classList.remove("border-gray-300");
@@ -310,7 +310,7 @@ const validZip = function (inputZip) {
     inputZip.classList.remove("border-red-300");
     inputZip.classList.add("border-green-300");
   } else {
-    small.innerHTML = "Code postal non valide";
+    small.innerHTML = "Saisie incorrecte";
     small.classList.add("text-red-800", "text-xs");
     inputZip.classList.remove("border-gray-300");
     inputZip.classList.toggle("border-green-300");
@@ -338,7 +338,7 @@ const validCity = function (inputCity) {
     inputCity.classList.remove("border-red-300");
     inputCity.classList.add("border-green-300");
   } else {
-    small.innerHTML = "Ville invalide 30 caractères maximum sans tiret";
+    small.innerHTML = "Saisie incorrecte 30 caractères maximum sans tiret";
     small.classList.remove("text-green-800");
     small.classList.add("text-red-800", "text-xs");
     inputCity.classList.remove("border-gray-300");

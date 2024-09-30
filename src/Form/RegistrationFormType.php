@@ -27,27 +27,27 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'attr' => ['class' => 'rounded-lg bg-gray-50 border border-gray-300 text-gray-900 text-xs 
                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
-                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => 'Email'],
+                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => ''],
                 'label' => 'Email',
                 'label_attr' => ['class' => 'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
                 'constraints' => [
                     new Sequentially([
-                        new NotBlank(message: "indiquez votre adresse email"),
-                        new Length(['max' => 180, 'maxMessage' => '180 caractères autorisés']),
-                        new Email(message: '{{ value }} n\'est pas un email valide.')
+                        new NotBlank(message: ""),
+                        new Length(['max' => 180, 'maxMessage' => '']),
+                        new Email(message: '')
                     ])
                 ]
             ])
             ->add('pseudo', TextType::class, [
                 'attr' => ['class' => 'rounded-lg bg-gray-50 border border-gray-300 text-gray-900 text-xs 
                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
-                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => 'Pseudo (ex: Pseudonyme#1984)'],
+                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => ''],
                 'label' => 'Pseudo',
                 'label_attr' => ['class' => 'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
                 'constraints' => [
                     new Sequentially([
-                        new NotBlank(message: 'Indiquez votre pseudo'),
-                        new Length(['min' => 6, 'max' => 25, 'minMessage' => 'Minimum 2 caractères', 'maxMessage' => 'Maximum 30 caractères']),
+                        new NotBlank(message: ''),
+                        new Length(['min' => 6, 'max' => 25, 'minMessage' => '', 'maxMessage' => '']),
                         new Regex(
                             pattern: '/^[a-zA-Zéèêà]{3,20}#[0-9]{2,4}$/i',
                             htmlPattern: '^[a-zA-Zéèêà]{3,20}#[0-9]{2,4}$'
@@ -63,19 +63,19 @@ class RegistrationFormType extends AbstractType
                     'class' => 'rounded-lg bg-gray-50 border border-gray-300 text-gray-900 text-xs 
                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
                    dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
-                    'placeholder' => 'Mot de passe (ex: 9#PassworD7!)',
+                    'placeholder' => '',
                     'autocomplete' => 'new-password'
                 ],
                 'label' => 'Mot de passe',
                 'label_attr' => ['class' => 'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
                 'constraints' => [
                     new Sequentially([
-                        new NotBlank(['message' => 'Indiquez votre mot de passe']),
+                        new NotBlank(['message' => '']),
                         new Length([
                             'min' => 10,
                             'max' => 12,
-                            'minMessage' => 'Minimum {{ limit }} caractères',
-                            'maxMessage' => 'Maximum {{ limit }} caractères'
+                            'minMessage' => '',
+                            'maxMessage' => ''
                         ]),
                         new Regex(
                             pattern: '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,12}$/i',
@@ -87,13 +87,13 @@ class RegistrationFormType extends AbstractType
             ->add('zip', TextType::class, [
                 'attr' => ['class' => 'rounded-lg bg-gray-50 border border-gray-300 text-gray-900 text-xs 
                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
-                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => 'Code postal'],
+                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => ''],
                 'label' => 'Code postal',
                 'label_attr' => ['class' => 'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400'],
                 'constraints' => [
                     new Sequentially([
-                        new NotBlank(message: 'Indiquez votre code postal'),
-                        new Length(['min' => 5, 'max' => 5, 'minMessage' => '5 chiffres', 'maxMessage' => '5 chiffres']),
+                        new NotBlank(message: ''),
+                        new Length(['min' => 5, 'max' => 5, 'minMessage' => '', 'maxMessage' => '']),
                         new Regex(
                             pattern: '/^(F-)?((2[A|B])|[0-9]{2})[0-9]{3}$/i',
                             htmlPattern: '^(F-)?((2[A|B])|[0-9]{2})[0-9]{3}$'
@@ -104,13 +104,13 @@ class RegistrationFormType extends AbstractType
             ->add('city', TextType::class, [
                 'attr' => ['class' => 'rounded-lg bg-gray-50 border border-gray-300 text-gray-900 text-xs 
                   focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
-                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => 'Ville'],
+                   dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500', 'placeholder' => ''],
                 'label' => 'Ville',
                 'label_attr' => ['class' => 'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400 '],
                 'constraints' => [
                     new Sequentially([
-                        new NotBlank(message: 'Indiquez votre ville'),
-                        new Length(['min' => 2, 'max' => 30, 'minMessage' => 'Minimum 2 lettres', 'maxMessage' => 'Maximum 25 lettres']),
+                        new NotBlank(message: ''),
+                        new Length(['min' => 2, 'max' => 30, 'minMessage' => '', 'maxMessage' => '']),
                         new Regex(
                             pattern: '/^[a-zA-Z\' éèêàç]{2,30}$/i',
                             htmlPattern: '^[a-zA-Z\' éèàêç]{2,30}$'
@@ -130,7 +130,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'Accepter les conditions générales.',
+                        'message' => '',
                     ]),
                 ],
             ])
