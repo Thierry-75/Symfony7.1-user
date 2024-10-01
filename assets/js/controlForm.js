@@ -4,7 +4,7 @@ window.onload = () => {
 
   /*----------------begin registrationForm--------------------*/
 
-  if (formRegistration !== null) {
+  if (formRegistration) {
     /*---email---*/
     let email = formRegistration.querySelector("#registration_form_email");
     email.addEventListener("blur", function () {
@@ -53,6 +53,7 @@ window.onload = () => {
     /*---RGPD---*/
     let rgpd = formRegistration.querySelector("#registration_form_agreeTerms");
     let small = document.querySelector("#agreeSmall");
+    /*----*/
     let form_submit = formRegistration.querySelector(
       "#registration_form_submit"
     );
@@ -87,7 +88,7 @@ window.onload = () => {
   /*------------------begin connexionForm-------------------------------*/
 
   /*---Email--------*/
-  if (loginForm !== null) {
+  if (loginForm) {
     let emailLogin = loginForm.querySelector("#inputEmail");
     emailLogin.addEventListener("blur", function () {
       controlEmail(this);
