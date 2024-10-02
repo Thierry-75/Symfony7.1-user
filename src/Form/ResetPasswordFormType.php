@@ -26,6 +26,7 @@ class ResetPasswordFormType extends AbstractType
                          dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-3',
                         'required' => true,
                         'autocomplete' => 'new-password',
+                        'placeholder' => ''
                     ],
                     'label' => 'Nouveau mot de passe',
                     'label_attr' => ['class' => 'block mb-1 text-xs font-light text-gray-500 dark:text-gray-400']

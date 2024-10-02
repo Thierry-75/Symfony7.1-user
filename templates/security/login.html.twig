@@ -62,6 +62,9 @@ block body %}
         >
           Se connecter
         </h1>
+        <div>
+          <p id="message_form_connexion"></p>
+        </div>
         {% if error %}
         <div class="alert-bg-danger" role="alert">
           <svg
@@ -136,7 +139,7 @@ block body %}
             <label
               for="inputPassword"
               class="block mb-1 text-xs font-light text-gray-500 dark:text-gray-400"
-              >Password</label
+              >Mot de passe</label
             >
             <input
               type="password"
