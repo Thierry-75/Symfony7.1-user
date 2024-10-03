@@ -14,7 +14,9 @@ block body %}
         >
           Inscription
         </h1>
-
+        <div>
+          <p id="message_form_inscription"></p>
+        </div>
         {{
           form_start(registrationForm, {
             attr: {
@@ -27,7 +29,7 @@ block body %}
         <div>
           {{ form_label(registrationForm.email) }}
           {{ form_widget(registrationForm.email) }}
-          <div class="text-xs text-red-700">
+          <div class="text-sm text-red-700">
             {{ form_errors(registrationForm.email) }}
             <small id="emailSmall"></small>
           </div>
@@ -35,7 +37,7 @@ block body %}
         <div>
           {{ form_label(registrationForm.pseudo) }}
           {{ form_widget(registrationForm.pseudo) }}
-          <div class="text-xs text-red-700">
+          <div class="text-sm text-red-700">
             {{ form_errors(registrationForm.pseudo) }}
             <small id="pseudoSmall"></small>
           </div>
@@ -43,7 +45,7 @@ block body %}
         <div>
           {{ form_label(registrationForm.plainPassword) }}
           {{ form_widget(registrationForm.plainPassword) }}
-          <div class="text-xs text-red-700">
+          <div class="text-sm text-red-700">
             {{ form_errors(registrationForm.plainPassword) }}
             <small id="plainPasswordSmall"></small>
           </div>
@@ -51,7 +53,7 @@ block body %}
         <div>
           {{ form_label(registrationForm.zip) }}
           {{ form_widget(registrationForm.zip) }}
-          <div class="text-xs text-red-700">
+          <div class="text-sm text-red-700">
             {{ form_errors(registrationForm.zip) }}
             <small id="zipSmall"></small>
           </div>
@@ -59,7 +61,7 @@ block body %}
         <div>
           {{ form_label(registrationForm.city) }}
           {{ form_widget(registrationForm.city) }}
-          <div class="text-xs text-red-700">
+          <div class="text-sm text-red-700">
             {{ form_errors(registrationForm.city) }}
             <small id="citySmall"></small>
           </div>
@@ -71,7 +73,7 @@ block body %}
           <div class="ml-3 text-sm">
             {{ form_label(registrationForm.agreeTerms) }}
           </div>
-          <div class="text-xs text-red-700 ml-2">
+          <div class="text-sm text-red-700 ml-2">
             {{ form_errors(registrationForm.agreeTerms) }}
           </div>
         </div>
@@ -82,6 +84,7 @@ block body %}
         >
           Cr&eacute;er votre compte
         </button>
+        {{ form_end(registrationForm) }}
         <p class="text-xs font-light text-gray-500 dark:text-gray-400">
           D&eacute;j&agrave; inscrit ? &nbsp;&nbsp;
           <a
@@ -90,7 +93,6 @@ block body %}
             >&nbsp;Connexion</a
           >
         </p>
-        {{ form_end(registrationForm) }}
       </div>
     </div>
   </div>

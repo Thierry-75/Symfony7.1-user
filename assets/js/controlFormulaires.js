@@ -115,7 +115,7 @@ window.onload = () => {
       clearMessageFirstPassword(affichage);
     });
   }
-  /*-------------formulaire login.html.twig-----------------*/
+  /*-------------formulaire login.html.twig init-----------------*/
   let connexion_form = document.querySelector("#connexion_form");
   if (connexion_form) {
     let affichage = document.querySelector("#message_form_connexion");
@@ -195,15 +195,280 @@ window.onload = () => {
         !cpt == 0 ||
         champsSuccess.length != nombreBorder
       ) {
-        var mot = "votre saisie n'est conforme";
+        var mot = "votre saisie n'est pas conforme";
         story_show(affichage, mot);
         event.preventDefault();
         event.stopImmediatePropagation();
         return false;
       }
     });
-  } //-------------
+  }
+  /*------------- formulaire register.html.twig -----------*/
+  let registration_form = document.querySelector("#registration_form");
+  let affichage = document.querySelector("#message_form_inscription");
+  if (registration_form) {
+    let mot = "Indiquez vos coordonnées";
+    story_show(affichage, mot);
+    let registration_form_email = registration_form.querySelector(
+      "#registration_form_email"
+    );
+    registration_form_email.addEventListener("focus", function () {
+      clearEmailRegister(this, affichage);
+    });
+    registration_form_email.addEventListener("change", function () {
+      controlEmailRegister(this, affichage);
+    });
+    registration_form_email.addEventListener("blur", function () {
+      resultatEmailRegister(this);
+    });
+    let registration_form_pseudo = registration_form.querySelector(
+      "#registration_form_pseudo"
+    );
+    registration_form_pseudo.addEventListener("focus", function () {
+      clearPseudoRegister(this, affichage);
+    });
+    registration_form_pseudo.addEventListener("change", function () {
+      controlPseudoRegister(this, affichage);
+    });
+    registration_form_pseudo.addEventListener("blur", function () {
+      resultatPseudoRegister(this);
+    });
+    let registration_form_plainPassword = registration_form.querySelector(
+      "#registration_form_plainPassword"
+    );
+    registration_form_plainPassword.addEventListener("focus", function () {
+      clearPasswordRegister(this, affichage);
+    });
+    registration_form_plainPassword.addEventListener("change", function () {
+      controlPasswordRegister(this, affichage);
+    });
+    registration_form_plainPassword.addEventListener("blur", function () {
+      resultatPasswordRegister(this);
+    });
+    let registration_form_zip = registration_form.querySelector(
+      "#registration_form_zip"
+    );
+    registration_form_zip.addEventListener("focus", function () {
+      clearZipRegister(this, affichage);
+    });
+    registration_form_zip.addEventListener("change", function () {
+      controlZipRegister(this, affichage);
+    });
+    registration_form_zip.addEventListener("blur", function () {
+      resultatZipRegister(this);
+    });
+    let registration_form_city = registration_form.querySelector(
+      "#registration_form_city"
+    );
+    registration_form_city.addEventListener("focus", function () {
+      clearCiityRegister(this, affichage);
+    });
+    registration_form_city.addEventListener("change", function () {
+      controlCityRegister(this, affichage);
+    });
+    registration_form_city.addEventListener("blur", function () {
+      resultatCityRegister(this);
+    });
+    let registration_form_agreeTerms = registration_form.querySelector(
+      "#registration_form_agreeTerms"
+    );
+    let agreeSmall = registration_form.querySelector("#agreeSmall");
+
+    registration_form_agreeTerms.addEventListener("click", function () {
+      agreeSmall.classList.remove("text-red-600");
+      agreeSmall.classList.add("text-gray-500");
+      clearMessage(affichage);
+    });
+    let registration_form_submit = document.querySelector(
+      "#registration_form_submit"
+    );
+
+    registration_form_submit.addEventListener("click", function (event) {
+      let inputs = registration_form.getElementsByTagName("input");
+      let compteur = 0;
+      let champsSuccess = [];
+      for (var i = 0; i < inputs.length; i++) {
+        if (
+          inputs[i].type == "email" ||
+          inputs[i].type == "text" ||
+          inputs[i].type == "password"
+        ) {
+          champsSuccess[i] = inputs[i];
+          if (inputs[i].value == "") {
+            alert_submit(inputs[i]);
+            compteur++;
+          }
+        }
+      }
+      let nombreBordure = 0;
+      for (var j = 0; j < champsSuccess.length; j++) {
+        if (champsSuccess[j].classList.contains("border-green-600")) {
+          nombreBordure++;
+        }
+      }
+      if (!registration_form_agreeTerms.checked) {
+        agreeSmall.classList.remove("text-gray-500");
+        agreeSmall.classList.add("text-red-600");
+      }
+      if (
+        !registration_form_agreeTerms.checked ||
+        !compteur == 0 ||
+        champsSuccess.length != nombreBordure
+      ) {
+        let mot = "Votre saisie n'est pas conforme";
+        story_show(affichage, mot);
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        return false;
+      }
+    });
+  }
 }; /* -----------FIN WINDOW.ONLOAD------------------------*/
+
+/*-----------------register.html.twig-----------------*/
+const clearEmailRegister = function (champ, message) {
+  let mot = "Indiquez votre email";
+  story_show(message, mot);
+  registration_form_email.value = "";
+  original_border(champ);
+  let modele = document.querySelector("#emailSmall");
+  modele.innerHTML = "";
+};
+
+const clearPseudoRegister = function (champ, message) {
+  let mot = "Indiquez votre pseudo";
+  story_show(message, mot);
+  registration_form_pseudo.value = "";
+  original_border(champ);
+  let modele = document.querySelector("#pseudoSmall");
+  modele.innerHTML = "";
+};
+
+const clearPasswordRegister = function (champ, message) {
+  let mot = "Indiquez votre mot de passe";
+  story_show(message, mot);
+  registration_form_plainPassword.value = "";
+  original_border(champ);
+  let modele = document.querySelector("#plainPasswordSmall");
+  modele.innerHTML = "";
+};
+
+const clearZipRegister = function (champ, message) {
+  let mot = "Indiquez votre code postal";
+  story_show(message, mot);
+  registration_form_zip.value = "";
+  original_border(champ);
+  let modele = document.querySelector("#zipSmall");
+  modele.innerHTML = "";
+};
+
+const clearCiityRegister = function (champ, message) {
+  let mot = "Indiquez votre ville";
+  story_show(message, mot);
+  registration_form_city.value = "";
+  original_border(champ);
+  let modele = document.querySelector("#citySmall");
+  modele.innerHTML = "";
+};
+/*--10 à 12 caractères autorisés : A-Za-z0-9#?!@$ %^&*- ---*/
+const controlEmailRegister = function (champ, message) {
+  let email_regexp = new RegExp(
+    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  );
+  if (champ.value.match(email_regexp)) {
+    success_submit(champ);
+  } else {
+    alert_submit(champ);
+    let mot = "Cet email n'est pas valide";
+    story_show(message, mot);
+    let modele = document.querySelector("#emailSmall");
+    modele.innerHTML = "ex : exemple@email.fr";
+  }
+};
+
+const controlPseudoRegister = function (champ, message) {
+  let pseudoRegExp = new RegExp("^[a-zA-Zéèêà]{3,20}#[0-9]{2,4}$"); // ^.{3,32}#[0-9]{4}$
+  if (champ.value.match(pseudoRegExp)) {
+    success_submit(champ);
+  } else {
+    alert_submit(champ);
+    let mot = "Ce Pseudo n'est pas valide";
+    story_show(message, mot);
+    let modele = document.querySelector("#pseudoSmall");
+    modele.innerHTML =
+      "max 20 caractères ex : theophile#3245 - # et chiffres obligatoires";
+  }
+};
+
+const controlPasswordRegister = function (champ, message) {
+  let passwordRegExp = new RegExp(
+    "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{10,12}$"
+  );
+  if (champ.value.match(passwordRegExp)) {
+    success_submit(champ);
+  } else {
+    alert_submit(champ);
+    let mot = "Ce Mot de passe n'est pas valide";
+    story_show(message, mot);
+    let modele = document.querySelector("#plainPasswordSmall");
+    modele.innerHTML = "10 à 12 caractères autorisés : A-Za-z0-9#?!@$ %^&*-";
+  }
+};
+
+const controlZipRegister = function (champ, message) {
+  let zipRegExp = new RegExp(/^(F-)?((2[A|B])|[0-9]{2})[0-9]{3}$/);
+  if (champ.value.match(zipRegExp)) {
+    success_submit(champ);
+  } else {
+    alert_submit(champ);
+    let mot = "Ce code postal n'est pas valide";
+    story_show(message, mot);
+    let modele = document.querySelector("#zipSmall");
+    modele.innerHTML = "5 chiffres seulement";
+  }
+};
+
+const controlCityRegister = function (champ, message) {
+  let cityRegExp = new RegExp("^[a-zA-Z' éèêàç]{2,30}$");
+  if (champ.value.match(cityRegExp)) {
+    success_submit(champ);
+  } else {
+    alert_submit(champ);
+    let mot = "Cette ville n'est pas valide";
+    story_show(message, mot);
+    let modele = document.querySelector("#citySmall");
+    modele.innerHTML = "Saisie incorrecte 30 caractères maximum sans tiret";
+  }
+};
+const resultatEmailRegister = function (champ) {
+  if (champ.value == "") {
+    alert_submit(champ);
+  }
+};
+
+const resultatPseudoRegister = function (champ) {
+  if (champ.value == "") {
+    alert_submit(champ);
+  }
+};
+
+const resultatPasswordRegister = function (champ) {
+  if (champ.value == "") {
+    alert_submit(champ);
+  }
+};
+
+const resultatZipRegister = function (champ) {
+  if (champ.value == "") {
+    alert_submit(champ);
+  }
+};
+
+const resultatCityRegister = function (champ) {
+  if (champ.value == "") {
+    alert_submit(champ);
+  }
+};
 
 /*-----------------login.html.twig-------------------*/
 const control_emailLogin = function (champ, message) {
