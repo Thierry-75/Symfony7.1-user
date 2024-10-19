@@ -238,8 +238,71 @@ window.onload = () => {
 
   }/* fin form request reset password---*/
 
+  /*-----reset-password------*/
+  let reset_password_form = document.querySelector('#reset_password_form');
+  if(reset_password_form){
+    let message_reset_password = document.querySelector('#message_reset_password');
+    let indication = 'Indiquez votre nouveau mot de passe';
+    story_show(message_reset_password,indication);
+
+  let reset_password_form_password_first = reset_password_form.querySelector('#reset_password_form_password_first');
+
+  let reset_password_form_password_second = reset_password_form.querySelector('#reset_password_form_password_second');
+  let passwordSmall = reset_password_form.querySelector('#passwordSmall');
+  reset_password_form_password_first.addEventListener('focus',function(){
+      clearPassword(this,message_reset_password,passwordSmall);
+      reset_password_form_password_second.value='';
+  })
+  reset_password_form_password_first.addEventListener('change',function(){
+      controlPassword(this,message_reset_password,passwordSmall);
+  })
+  reset_password_form_password_first.addEventListener('blur',function(){
+    resultatPassword(this,passwordSmall);
+  })
+  reset_password_form_password_second.addEventListener('focus',function(){
+    clearPassword(this,message_reset_password,passwordSmall);
+  })
+  reset_password_form_password_second.addEventListener('change',function(){
+    controlPassword2(this,message_reset_password,passwordSmall,reset_password_form_password_first);
+    
+  })
+  reset_password_form_password_second.addEventListener('blur',function(){
+    resultatPassword(this,passwordSmall);
+  })
+
+  let submit_reset_password = reset_password_form.querySelector('#submit_reset_password');
+  submit_reset_password.addEventListener('click',function(event){
+    let inputs =reset_password_form.getElementsByTagName('input');
+    let champsSuccess = [];
+    let compteur = 0;
+    let nbBorder = 0;
+    for(var i =0; i < inputs.length; i++){
+      if(inputs[i].type=='password'){
+        champsSuccess[i]=inputs[i];
+        if(inputs[i].value==''){
+          alert_submit(inputs[i]);
+          compteur++;
+        }
+      }
+    }
+    for(var j = 0; j < champsSuccess.length; j++){
+      if(champsSuccess[j].classList.contains('border-green-600')){
+        nbBorder++;
+      }
+    }
+    if(!compteur == 0 || !champsSuccess.lastIndexOf  == nbBorder){
+      let indication ='Votre saisie n\'est pas conforme';
+      story_show(message_reset_password,indication);
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      return false;
+    }
+  })
+  }/* fin reset password ---*/
+
 }
 /*----traitement----*/
+
 /*---email----*/
 const clearEmail = function (champ, message, erratum) {
   let mot = "Indiquez votre adresse email";

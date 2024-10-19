@@ -50,7 +50,7 @@ class ResetPasswordFormType extends AbstractType
 
                 ],
                 'second_options' => [
-                    'label' => 'Répètez votre mot de passe',
+                    'label' => 'Répétez votre mot de passe',
                 ],
                 'invalid_message' => 'Les champs sont différents.',
                 // Instead of being set onto the object directly,
