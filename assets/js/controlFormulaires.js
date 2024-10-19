@@ -188,6 +188,55 @@ window.onload = () => {
     }
   })
   }/* fin login.html.twig */
+   /*---------------formulaire request reset password.----------*/
+  let form_reset_email = document.querySelector('#form_reset_email');
+  if(form_reset_email){
+    let message_reset_email = document.querySelector('#message_reset_email');
+    let indication = 'Indiquez votre adresse courriel';
+    story_show(message_reset_email,indication);
+
+    /*---email---*/
+    let reset_password_request_form_email = form_reset_email.querySelector('#reset_password_request_form_email');
+    let emailSmall = form_reset_email.querySelector('#emailSmall');
+    reset_password_request_form_email.addEventListener('focus',function(){
+        clearEmail(this,message_reset_email,emailSmall);
+    })
+    reset_password_request_form_email.addEventListener('change',function(){
+        controlEmail(this,message_reset_email,emailSmall);
+    })
+    reset_password_request_form_email.addEventListener('blur',function(){
+        resultatEmail(this,emailSmall);
+    })
+    let submit_reset = form_reset_email.querySelector('#submit_reset');
+    submit_reset.addEventListener('click',function(event){
+        let inputs = form_reset_email.getElementsByTagName('input');
+        let champsSuccess=[];
+        let compteur = 0;
+        let nbBorder = 0;
+        for(var i = 0; i < inputs.length; i++){
+          if(inputs[i].type == 'email'){
+            champsSuccess[i]=inputs[i];
+            if(inputs[i].value ==''){
+              alert_submit(inputs[i]);
+              compteur++;
+            }
+          }
+        }
+        for(var j =0; j < champsSuccess.length; j++){
+          if(champsSuccess[j].classList.contains('border-green-600')){
+            nbBorder++;
+          }
+        }
+        if(!compteur ==0 || !champsSuccess.length == nbBorder){
+          let indication ='Votre saise n\'est pas conforme';
+          story_show(message_reset_email,indication);
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          return false;
+        }
+    })
+
+  }/* fin form request reset password---*/
 
 }
 /*----traitement----*/
