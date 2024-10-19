@@ -26,13 +26,6 @@ services:
     networks:
       - webdev
 
-  rabbitmq:
-    image: rabbitmq:3.7-management
-    container_name: rabbitmq-blog
-    ports: [ 5672, 15672 ]
-    networks:
-      - webdev
-
   ###> symfony/mailer ###
   mailer:
     image: axllent/mailpit
