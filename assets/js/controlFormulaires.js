@@ -110,8 +110,85 @@ window.onload = () => {
           return false;
         }
       })
-      
   } /* fin register.html.twig */
+   /*---------------formulaire login.html.twig----------*/
+  let connexion_form = document.querySelector('#connexion_form');
+  if(connexion_form){
+    let message_form_connexion = document.querySelector('#message_form_connexion');
+    let indication = 'Indiquez vos coordonnées';
+    story_show(message_form_connexion,indication);
+
+  /*-----email-----*/
+  let inputEmail = connexion_form.querySelector('#inputEmail');
+  let emailSmall = connexion_form.querySelector('#emailSmall');
+  inputEmail.addEventListener('focus',function(){
+    clearEmail(this,message_form_connexion,emailSmall);
+  }) 
+  inputEmail.addEventListener('change',function(){
+    controlEmail(this,message_form_connexion,emailSmall);
+  })
+  inputEmail.addEventListener('blur',function(){
+    resultatEmail(this,emailSmall);
+  }) 
+  /*----password---*/
+  let inputPassword = connexion_form.querySelector('#inputPassword');
+  let passwordSmall = connexion_form.querySelector('#passwordSmall');
+  inputPassword.addEventListener('focus',function(){
+    clearPassword(this,message_form_connexion,passwordSmall);
+  })
+  inputPassword.addEventListener('change',function(){
+    controlPassword(this,message_form_connexion,passwordSmall);
+  })
+  inputPassword.addEventListener('blur',function(){
+    resultatPassword(this,passwordSmall);
+  })
+  /*-----remember_me---*/
+  let remember_me = connexion_form.querySelector('#remember_me');
+  let smallSubmit = connexion_form.querySelector('#smallSubmit');
+  remember_me.addEventListener('focus',function(){
+    clearRemember(this);
+  })
+  remember_me.addEventListener('click',function(){
+    controlRemember(this,message_form_connexion,smallSubmit);
+  })
+  remember_me.addEventListener('blur',function(){
+    resultatRemember(this,message_form_connexion,smallSubmit);
+  })
+  /*-----formSubmitLogin submit-----*/
+  let formSubmitLogin = connexion_form.querySelector('#formSubmitLogin');
+  formSubmitLogin.addEventListener('click',function(event){
+    let inputs = connexion_form.getElementsByTagName('input');
+    let champsSuccess = [];
+    let compteur = 0;
+    let nbBorder = 0;
+    for (var i =0; i < inputs.length; i++){
+      if(inputs[i].type=='email' || inputs[i].type=='password'){
+        champsSuccess[i]=inputs[i];
+        if(inputs[i].value==''){
+          alert_submit(inputs[i]);
+          compteur++;
+        }
+      }
+    }
+    for(var j=0; j < champsSuccess.length; j++){
+      if(champsSuccess[j].classList.contains('border-green-600')){
+        nbBorder++;
+      }
+    }
+    if(!remember_me.checked){
+      smallSubmit.classList.remove("text-gray-500");
+      smallSubmit.classList.add('text-red-600');
+    }
+    if(!remember_me.checked || !compteur ==0 || !champsSuccess.length == nbBorder){
+      let indication= 'Votre saisie n\'est pas conforme';
+      story_show(message_form_connexion,indication);
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      return false;
+    }
+  })
+  }/* fin login.html.twig */
+
 }
 /*----traitement----*/
 /*---email----*/
@@ -272,7 +349,7 @@ const controlRgpd = function (champ,message, erratum) {
     clearMessage(message);
   } else {
     success_submit(champ);
-    let erreur = " Se souvenir de moi";
+    let erreur = "Se souvenir de moi";
     original_border(champ);
     cool_show(erratum, erreur);
   }
@@ -292,6 +369,42 @@ const resultatRgpd = function (champ, message, erratum) {
     clearMessage(message);
   }
 };
+
+/*----remember_me---*/
+const clearRemember = function (champ) {
+  if (!champ.checked) {
+    alert_submit(champ);
+  } else {
+    original_border(champ);
+  }
+};
+const controlRemember = function (champ,message, erratum) {
+  if (!champ.checked) {
+    alert_submit(champ);
+    clearMessage(message);
+  } else {
+    success_submit(champ);
+    let erreur = " Se souvenir de moi";
+    original_border(champ);
+    cool_show(erratum, erreur);
+  }
+};
+const resultatRemember = function (champ, message, erratum) {
+  if (!champ.checked) {
+    alert_submit(champ);
+    let mot = "Veuillez à cocher cette case SVP";
+    let erreur = "Vérifiez votre saisie !";
+    story_show(erratum, mot);
+    story_show(message, erreur);
+  } else {
+    success_submit(champ);
+    let indication = "Se souvenir de moi";
+    original_border(champ);
+    cool_show(erratum, indication);
+    clearMessage(message);
+  }
+};
+
 
 /*----------------functions DOM-----------------*/
 const story_show = function (message, mot) {
@@ -330,7 +443,7 @@ const success_submit = function (champ) {
 const original_border = function (champ) {
   champ.classList.remove("border-red-600");
   champ.classList.remove("border-green-600");
-  champ.classList.add("border-gray-300");
+  champ.classList.add('border','border-gray-300','rounded','bg-gray-50');
 };
 
 const clearMessage = function (message) {
