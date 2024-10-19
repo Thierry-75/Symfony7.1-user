@@ -79,49 +79,37 @@ window.onload = () => {
         resultatRgpd(this,message_form_inscription,agreeSmall);
       })
   let registration_form_submit = registration_form.querySelector('#registration_form_submit');
-  registration_form_submit.addEventListener('click',function(event){
-    let inputs = registration_form.getElementsByTagName('input');
-    let compteur = 0;
-    let champSuccess = [];
-    let nbBordure = 0;
-    for(var i= 0; i < inputs.length; i++){
-      if(inputs[i].type == 'email' || inputs[i].type == 'text' || inputs[i].type == 'password' ){
-        champSuccess[i]=inputs[i];
-        if(inputs[i].value == ''){
-          alert_submit(inputs[i]);
-          compteur++;
+      registration_form_submit.addEventListener('click',function(event){
+        let inputs= registration_form.getElementsByTagName('input');
+        let compteur = 0; 
+        let nbBorder = 0;
+        let champsSuccess = [];
+        for(var i=0; i < inputs.length; i++){
+          if(inputs[i].type=='email' || inputs[i].type=='text' || inputs[i].type=='password'){
+            champsSuccess[i]=inputs[i];
+            if(inputs[i].value ==''){
+              alert_submit(inputs[i]);
+              compteur++;
+            }
+          }
         }
-      }
-    }
-    for(var j =0; j < champSuccess.length; j++){
-      if(champSuccess[j].classList.contains('border-green-600')){
-        nbBordure++;
-      }
-    }
-    if(!registration_form_agreeTerms.checked){
-      alert_submit(registration_form_agreeTerms);
-        registration_form_agreeTerms.classList.remove(
-        "text-xs",
-        "font-light",
-        "text-gray-500",
-        "dark:text-gray-300"
-      );
-        registration_form_agreeTerms.classList.add(
-        "text-xs",
-        "text-red-600",
-        "text-center",
-        "italic"
-      );
-    }
-    if(!registration_form_agreeTerms.checked || !compteur == 0 || !champSuccess.length == nbBordure){
-      let indication= "Votre saisie n\'est pas conforme";
-        story_show(message_form_inscription,indication);
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      return false;
-    }
-    
-  });
+        for(var j =0; j < champsSuccess.length ; j++){
+          if(champsSuccess[j].classList.contains('border-green-600')){
+            nbBorder++;
+          }
+        }
+        if(!registration_form_agreeTerms.checked){
+          agreeSmall.classList.remove('text-gray-500');
+          agreeSmall.classList.add('text-red-600');
+        }
+        if(!registration_form_agreeTerms.checked || !compteur == 0 || !champsSuccess.length == nbBorder){
+          let indication = 'Votre saisie n\'est pas conforme';
+          story_show(message_form_inscription,indication);
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          return false;
+        }
+      })
       
   } /* fin register.html.twig */
 }
