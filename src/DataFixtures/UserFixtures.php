@@ -23,20 +23,6 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $admin = new User();
-        $admin->setEmail('thierrydothee@protonmail.com')
-            ->setRoles(['ROLE_USER,ROLE_ADMIN'])
-            ->setCreateAt(new \DateTimeImmutable())
-            ->setPlainpassword('ArethiA75!')
-            ->setZip(94500)
-            ->setCity('Champigny sur Marne')
-            ->setPseudo('Heraclite-75')
-            ->setIsVerified(false)
-        ;
-
-        $users[] = $admin;
-        $manager->persist($admin);
-
         for ($i = 0; $i < 3; $i++) {
             $user  = new User();
             $user->setEmail($this->faker->email())
