@@ -104,22 +104,23 @@ class RegistrationController extends AbstractController
     #[Route('/renvoiverif', name: 'resend_verif')]
     public function resendVerif(UserRepository $userRepository, JWTService $jwt, SendMailService $mail): Response
     {
-        $user = $this->getUser();
-        if (!$user) {
+        
+        if (!$this->getUser()) {
             $this->addFlash('alert-danger', 'Vous devez être connecté pour accéder à cette page !');
             return $this->redirectToRoute('app_login');
         }
-        if ($user->getIsVerified()) {
+        if ($this->getUser()->getIsVerified()) {
             $this->addFlash('alert-warning', 'Ce compte est déjà activé !');
             return $this->redirectToRoute('app_main');  // redirect to profil
         }
+        
         //generate jwt
         $header = [
             'typ' => 'JWT',
             'alg' => 'HS256'
         ];
         $payload = [
-            'user_id' => $user->getId()
+            'user_id' => $this->getUser()->getId()
         ];
         //token
         $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
@@ -127,11 +128,11 @@ class RegistrationController extends AbstractController
         //envoi du mail
         $mail->envoi(
             'no-reply@monblog.org',
-            $user->getEmail(),
+            $this->getUser()->getEmail(),
             'Activation de votrecompte sur notre site',
             'register',
             [
-                'user' => $user,
+                'user' => $this->getUser(),
                 'token' => $token
             ]
         );

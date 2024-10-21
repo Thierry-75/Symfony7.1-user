@@ -3,16 +3,18 @@
 namespace App\Controller;
 
 use App\Form\ResetPasswordFormType;
-use App\Service\SendMailService;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ResetPasswordRequestFormType;
+use App\Message\SendConfirmationReset;
+use App\Message\SendReinitialisation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
@@ -48,7 +50,7 @@ class SecurityController extends AbstractController
         UserRepository $userRepository,
         TokenGeneratorInterface $tokenGeneratorInterface,
         EntityManagerInterface $em,
-        SendMailService $mail
+        MessageBusInterface $messageBusInterface
     ): Response {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
@@ -66,18 +68,11 @@ class SecurityController extends AbstractController
                     $user->setResetToken($token);
                     $em->persist($user);
                     $em->flush();
-                    // end try catch
                     //link init
                     $url = $this->generateUrl('reset_pass', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
                     //email
                     $context = ['url' => $url, 'user' => $user];
-                    $mail->envoi(
-                        'no-reply@mon-blog.org',
-                        $user->getEmail(),
-                        'Réinitialisation du password',
-                        'password_reset',  // template
-                        $context
-                    );
+                    $messageBusInterface->dispatch(new SendReinitialisation('no-reply@mon-blog.org',$user->getEmail(),'Réinitialisation du mot de passe','password_reset',$context));
                     $this->addFlash('alert-success', 'email envoyé !');
                     return $this->redirectToRoute('app_main');
                 }
@@ -95,9 +90,10 @@ class SecurityController extends AbstractController
         UserRepository $usersRepository,
         ValidatorInterface $validator,
         EntityManagerInterface $em,
-        UserPasswordHasherInterface $passwordHasher
+        UserPasswordHasherInterface $passwordHasher,
+        MessageBusInterface $messageBus
     ): Response {
-        //ckeck jeton
+        //ckeck jeton - user
         $user = $usersRepository->findOneByResetToken($token);
         if (isset($user)) {
             $form_reset = $this->createForm(ResetPasswordFormType::class);
@@ -115,7 +111,7 @@ class SecurityController extends AbstractController
                     // try catch
                     $em->persist($user);
                     $em->flush();
-                    // end try catch
+                    $messageBus->dispatch(new SendConfirmationReset('Votre mot de passe a bien été modifié', $user->getEmail()));
                     $this->addFlash('alert-success', 'Mot de passe changé avec succès');
                     return $this->redirectToRoute('app_login');
                 }
