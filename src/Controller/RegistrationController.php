@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
+use App\Service\IntraController;
 use App\Service\JWTService;
 use App\Service\SendMailService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -102,18 +103,18 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/renvoiverif', name: 'resend_verif')]
-    public function resendVerif(UserRepository $userRepository, JWTService $jwt, SendMailService $mail): Response
+    public function resendVerif(JWTService $jwt, SendMailService $mail, IntraController $checkmail): Response
     {
         
-        if (!$this->getUser()) {
-            $this->addFlash('alert-danger', 'Vous devez être connecté pour accéder à cette page !');
+        if($this->denyAccessUnlessGranted('ROLE_USER')){
+            $this->addFlash('alert-danger','Vous devez être connecté pour accéder à cette page');
             return $this->redirectToRoute('app_login');
         }
-        if ($this->getUser()->getIsVerified()) {
+
+        if(!$checkmail->confirmationEmail($this->getUser())){
             $this->addFlash('alert-warning', 'Ce compte est déjà activé !');
             return $this->redirectToRoute('app_main');  // redirect to profil
-        }
-        
+        }        
         //generate jwt
         $header = [
             'typ' => 'JWT',
